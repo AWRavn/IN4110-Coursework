@@ -1,0 +1,4 @@
+Timing: python_color2grayscale
+Average runtime running python_color2grayscale after 10 runs: 0.8916956901550293
+Timing performed using: time.time()
+Dimensions of the filtered image: H=400, W=600, C=3

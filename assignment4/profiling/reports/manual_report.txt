@@ -1,0 +1,16 @@
+The following results are produced via the test:
+
+Timing: test_slow_rectangle.random_array()
+Average runtime running test_slow after 10 runs: 0.0011531591415405273
+Timing performed using: time.time() (manual timing)
+
+Timing: test_slow_rectangle.loop()
+Average runtime running test_slow after 10 runs: 0.02205946445465088
+Timing performed using: time.time() (manual timing)
+
+Timing: test_slow_rectangle.snake_loop()
+Average runtime running test_slow after 10 runs: 0.23078491687774658
+Timing performed using: time.time() (manual timing)
+
+
+Based on the average of 10 runs we can see that snake_loop() function is the slowest part of the code snippet is function snake_loop(), specifically line 83.

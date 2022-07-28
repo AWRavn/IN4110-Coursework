@@ -1,0 +1,5 @@
+Timing: numpy_color2grayscale
+Average runtime running numpy_color2grayscale after 10 runs: 0.0010905027389526366
+Average runtime for running numpy_color2grayscale is 817.6922976016092 times faster than python_color2grayscale
+Timing performed using: time.time()
+Dimensions of the filtered image: H=400, W=600, C=3

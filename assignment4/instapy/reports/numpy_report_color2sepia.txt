@@ -1,0 +1,5 @@
+Timing: numpy_color2sepia
+Average runtime running numpy_color2sepia after 10 runs: 0.012826919555664062
+Average runtime for running numpy_color2sepia is 236.58042379182157 times faster than python_color2sepia
+Timing performed using: time.time()
+Dimensions of the filtered image: H=400, W=600, C=3

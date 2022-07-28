@@ -1,0 +1,16 @@
+The following results are produced via the test:
+
+Timing: test_slow_rectangle.random_array()
+Average runtime running test_slow after 10 runs: 0.010685309011023492
+Timing performed using: timeit.timeit()
+
+Timing: test_slow_rectangle.loop()
+Average runtime running test_slow after 10 runs: 0.2247793039714452
+Timing performed using: timeit.timeit()
+
+Timing: test_slow_rectangle.snake_loop()
+Average runtime running test_slow after 10 runs: 2.3259056789975148
+Timing performed using: timeit.timeit()
+
+
+We can see that the implementation relatively same times as manual implementation with slower by one order of magnitude.

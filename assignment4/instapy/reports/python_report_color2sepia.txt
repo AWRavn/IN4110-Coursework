@@ -1,0 +1,4 @@
+Timing: python_color2sepia
+Average runtime running python_color2sepia after 10 runs: 3.0345980644226076
+Timing performed using: time.time()
+Dimensions of the filtered image: H=400, W=600, C=3

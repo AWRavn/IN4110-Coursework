@@ -1,0 +1,19 @@
+The following results are produced via the test:
+
+5782 function calls in 0.252 seconds
+
+Ordered by: call count
+
+ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+  5772    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+     2    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+     2    0.001    0.001    0.001    0.001 {built-in method numpy.array}
+     1    0.001    0.001    0.001    0.001 {method 'rand' of 'numpy.random.mtrand.RandomState' objects}
+     1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+     1    0.000    0.000    0.001    0.001 .../in3110-adalw/assignment4/code/test_slow_rectangle.py:4(random_array)
+     1    0.021    0.021    0.021    0.021 .../in3110-adalw/assignment4/code/test_slow_rectangle.py:11(loop)
+     1    0.228    0.228    0.229    0.229 .../in3110-adalw/assignment4/code/test_slow_rectangle.py:27(snake_loop)
+     1    0.000    0.000    0.252    0.252 cProfile_timing.py:12(main)
+
+
+Again the implementation shows comparable relative times as the manual implementation with matching order of magnitude. Notably the runtime of all function is recognized to be slightly shorter using this method.
