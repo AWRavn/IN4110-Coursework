@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <!-- Set style guides. -->
+  <style>
+    .error {
+      color: red;
+    }
+    .row {
+      flex:  50%;
+    }
+    .column-left {
+      float:  left;
+      width:  20%;
+    }
+    .country-list {
+      height: 470px;
+      overflow:  auto;
+    }
+    .column-right {
+      float:  right;
+      width:  75%;
+    }
+  </style>
+  
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+
+<body>
+  <!-- Add navigation bar. -->
+  <div class="topnav">
+    <a class="active" href="/">Home</a>
+    <a href="/docs">FastAPI Docs</a>
+    <a href="/help">Help</a>
+  </div>
+
+  <!-- Title. -->
+  <h2>New confirmed Covid-19 cases per million people data visualization</h2>
+  <div class="row">
+
+    <!-- A location selection column. -->
+    <div class="column-left">
+      <form action="javascript:refreshPlot()" id="country-selection">
+        <label>Selected locations:</label>
+        <br><br>
+        <div class="country-list">
+          {% for country in countries %}
+          <input type="checkbox" name="{{ country }}" value="{{ country }}" checked />
+            <label for="{{ country }}">{{ country }}</label>
+            <br />
+            {% endfor %}
+        </div>
+        <br>
+        <button type="submit">Update locations</button>
+      </form>
+    </div>
+
+    <!-- Interval selection, graph output and date selection column. -->
+    <div class="column-right">
+
+      <!-- Interval selection. -->
+      <form action="javascript:refreshPlot()" id="interval-selection">
+        <label for="{{ interval }}">Interval: </label>
+        <select name="interval" id="interval">
+          <option value="daily">Daily</option>
+          <option value="rollingmean">Rolling average</option>
+          <option value="cumulative">Cumulative</option>
+        </select>
+        <button>Update interval</button>
+        <br><br>
+      </form>
+
+      <!-- Plot output. -->
+      <div id="plots">
+        <div id="altair-plot"></div>
+      </div>
+
+      <!-- Date selections. -->
+      <form action="javascript:refreshPlot()" id="time-selection">
+        <label>
+          Start date:
+          <input type="date" name="trip-start" id="trip-start" value={{ start_date }}>
+        </label>
+        <label>
+          End date:
+          <input type="date" name="trip-end" id="trip-end" value={{ end_date }}>
+        </label>
+        <br><br>
+        <button type="submit">Update dates</button>
+      </form>
+    </div>
+
+  </div>
+
+
+  <!-- Script getting correct plots. -->
+  <script>
+    async function refreshPlot() {
+
+      //  get checkboxes
+      var selected = [];
+      for (checkbox of document
+        .getElementById("country-selection")
+        .querySelectorAll("input[type=checkbox]")) {
+        if (checkbox.checked) {
+          selected.push(checkbox.value);
+        }
+      }
+      var countryParam = "countries=" + encodeURIComponent(selected.join(","));
+
+      // get timeframe
+      var startParam = "start=" + document.getElementById("trip-start").value
+      var endParam = "end=" + document.getElementById("trip-end").value
+
+      // get interval
+      var intervalParam = "interval=" + document.getElementById("interval").value
+
+      // update plot
+      var params = '?' + countryParam + '&' + startParam + '&' + endParam + '&' + intervalParam
+      var response = await fetch("/plot_reported_cases_per_million.json" + params); 
+      var spec = await response.json();
+
+      var embedOpt = {"mode": "vega-lite"};
+
+      // error handling
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById("#altair-plot");
+      vegaEmbed("#altair-plot", spec, embedOpt).catch(error => showError(el, error));
+    } //)(vegaEmbed);
+
+    // refresh on initial load
+    refreshPlot();
+
+  </script>
+
+</body>
+
+</html> 

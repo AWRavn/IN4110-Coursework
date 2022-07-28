@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <!-- Set style guides. -->
+  <style>
+    .error {
+      color: red;
+    }
+    .row {
+      flex:  50%;
+    }
+  </style>
+  
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+
+<body>
+
+  <!-- Title. -->
+  <h2>Climate Status Data</h2>
+
+  <!-- Plot output. -->
+  <div id="plots">
+    <div id="altair-plot"></div>
+  </div>
+
+
+  <!-- Script getting correct plots. -->
+  <script>
+    async function refreshPlot() {
+
+      // update plot
+      var response = await fetch("/plot_climate_data.json"); 
+      var spec = await response.json();
+
+      var embedOpt = {"mode": "vega-lite"};
+
+      // error handling
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById("#altair-plot");
+      vegaEmbed("#altair-plot", spec, embedOpt).catch(error => showError(el, error));
+    } //)(vegaEmbed);
+
+    // refresh on initial load
+    refreshPlot();
+
+  </script>
+
+</body>
+
+</html> 
